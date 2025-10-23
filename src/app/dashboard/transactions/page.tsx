@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Download, ListFilter, Plus, Search } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import useViewModel from "./viewModel";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { DataTable } from "../components/DataTable";
 import { formatRupiah } from "@/lib/formatRupiah";
 import { Card } from "@/components/ui/card";
@@ -18,24 +18,24 @@ import { Card } from "@/components/ui/card";
  * @param delay The delay in milliseconds
  * @returns The debounced value
  */
-const useDebounce = <T,>(value: T, delay: number): T => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+// const useDebounce = <T,>(value: T, delay: number): T => {
+//   const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useEffect(() => {
-    // Set debouncedValue to value (passed in) after the specified delay
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+//   useEffect(() => {
+//     // Set debouncedValue to value (passed in) after the specified delay
+//     const handler = setTimeout(() => {
+//       setDebouncedValue(value);
+//     }, delay);
 
-    // Return a cleanup function that will be called ...
-    // ... if value or delay changes (or if component unmounts)
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]); // Only re-call effect if value or delay changes
+//     // Return a cleanup function that will be called ...
+//     // ... if value or delay changes (or if component unmounts)
+//     return () => {
+//       clearTimeout(handler);
+//     };
+//   }, [value, delay]); // Only re-call effect if value or delay changes
 
-  return debouncedValue;
-};
+//   return debouncedValue;
+// };
 
 // --- Reusable SummaryCard Component ---
 type SummaryCardProps = {
@@ -80,17 +80,17 @@ const getPercentageBadgeClass = (variant: "positive" | "negative" | "default") =
 
 // --- Main Page Component ---
 const TransactionPage = () => {
-  const { control, watch } = useForm({
+  const { control } = useForm({
     defaultValues: {
       search: "",
     },
   });
 
   // 1. Watch the search input from react-hook-form
-  const search = watch("search", "");
+  // const search = watch("search", "");
 
   // 2. Debounce the search value to prevent excessive re-renders/API calls
-  const debouncedSearch = useDebounce(search, 300); // 300ms delay
+  // const debouncedSearch = useDebounce(search, 300); // 300ms delay
 
   // 3. Pass the debounced search term to the view model
   // (Assuming useViewModel accepts an object with a search key)
